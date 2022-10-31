@@ -1,6 +1,6 @@
 require('dotenv').config();
 const Web3 = require('web3');
-const FlContract = require('./build/contracts/Flashloan.json');
+//const FlContract = require('./build/contracts/Flashloan.json');
 const pancakeAbi = require('./abis/pancakeAbi.json');
 const apeAbi = require('./abis/apeAbi.json');
 
@@ -20,12 +20,12 @@ const web3 = new Web3(
   );
 
 const { address: admin } = web3.eth.accounts.wallet.add(process.env.PRIV_KEY);
+//this means admin = web3---KEY).address
 
-
-const flashLoanContract = new web3.eth.Contract(
+/*const flashLoanContract = new web3.eth.Contract(
     FlContract.abi,
     FlContract.networks[networkId].address
-  );
+  );*/
 
 const pancakeSwap = new web3.eth.Contract(
   pancakeAbi,
@@ -42,7 +42,8 @@ const DIRECTION = {
   APE_TO_PANCAKE: 1
 };
 
- 
+// here .toWei means amount is multiplied by 10^18
+// and .toBN is a js library to use for numbers in wei 
 const AMOUNT_BUSD_WEI = web3.utils.toBN(web3.utils.toWei('2000'));
 
 const init = async () => {
@@ -92,13 +93,13 @@ const init = async () => {
       const BUSDfromPancake = web3.utils.fromWei(amountsBUSD[0][1].toString(), 'ether')
 
       const BUSDinput = web3.utils.fromWei(AMOUNT_BUSD_WEI.toString(), 'ether') 
-      console.log(`Arbitrage from pancake to Ape
+      /*console.log(`Arbitrage from pancake to Ape
                    BUSD input:${BUSDinput} 
                    BUSD output:${BUSDfromApeswap}`)
       
       console.log(`Arbitrage from Ape to Pancake
                    BUSD input:${BUSDinput} 
-                   BUSD output:${BUSDfromPancake}`)
+                   BUSD output:${BUSDfromPancake}`)*/
     
       const profitPA = BUSDfromApeswap-BUSDinput
       const profitAP = BUSDfromPancake-BUSDinput
